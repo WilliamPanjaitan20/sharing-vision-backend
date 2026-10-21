@@ -1,0 +1,11 @@
+{
+  "info": { "name": "Sharing Vision Article API", "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json" },
+  "variable": [{ "key": "baseUrl", "value": "http://localhost:8080" }, { "key": "articleId", "value": "1" }],
+  "item": [
+    { "name": "Create article", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"title\": \"A practical guide to building calmer teams\",\n  \"content\": \"This is a deliberately long article body that exceeds the required two hundred characters. It explains how teams can make room for clear communication, protect focused work, and form sustainable habits that encourage everyone to contribute thoughtfully throughout the week.\",\n  \"category\": \"Culture\",\n  \"status\": \"publish\"\n}" }, "url": "{{baseUrl}}/article/" } },
+    { "name": "List articles", "request": { "method": "GET", "url": "{{baseUrl}}/article/10/0" } },
+    { "name": "Get article", "request": { "method": "GET", "url": "{{baseUrl}}/article/{{articleId}}" } },
+    { "name": "Update article", "request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"title\": \"A practical guide to building calmer teams\",\n  \"content\": \"This is a deliberately long revised article body that exceeds the required two hundred characters. It explains how teams can make room for clear communication, protect focused work, and form sustainable habits that encourage everyone to contribute thoughtfully throughout the week.\",\n  \"category\": \"Culture\",\n  \"status\": \"draft\"\n}" }, "url": "{{baseUrl}}/article/{{articleId}}" } },
+    { "name": "Trash article", "request": { "method": "DELETE", "url": "{{baseUrl}}/article/{{articleId}}" } }
+  ]
+}
