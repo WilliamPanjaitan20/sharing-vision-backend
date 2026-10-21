@@ -85,6 +85,7 @@ func openDB() (*sql.DB, error) {
 		DBName:               env("DB_NAME", "article"),
 		ParseTime:            true,
 		Loc:                  time.UTC,
+		TLSConfig:            env("DB_TLS", "false"),
 		AllowNativePasswords: true,
 	}
 	db, err := sql.Open("mysql", cfg.FormatDSN())

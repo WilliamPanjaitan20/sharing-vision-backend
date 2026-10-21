@@ -36,6 +36,35 @@ go run ./cmd/api
 
 API berjalan pada `http://localhost:8080`. Periksa koneksi database melalui `http://localhost:8080/health`.
 
+## Deploy demo online: Render + TiDB Cloud
+
+Gunakan [TiDB Cloud Starter](https://tidbcloud.com/) sebagai database MySQL-compatible dan Render sebagai host API. Keduanya menyediakan kuota gratis untuk demo kecil.
+
+1. Buat instance **MySQL Compatible Starter** di TiDB Cloud, lalu pada SQL Editor buat database `article` dan jalankan `migrations/001_create_posts.sql` di dalamnya.
+2. Pada dialog **Connect** TiDB Cloud, salin host, port, username, dan password. Username TiDB memiliki prefix khusus; gunakan nilai tersebut apa adanya.
+3. Di Render, buat **Web Service** dari repository backend ini dengan konfigurasi berikut:
+
+   ```text
+   Runtime: Go
+   Build command: go build -tags netgo -ldflags '-s -w' -o app ./cmd/api
+   Start command: ./app
+   Health check path: /health
+   Instance type: Free
+   ```
+
+4. Tambahkan environment variables berikut pada layanan Render. Jangan commit nilainya.
+
+   ```env
+   DB_HOST=<host-dari-TiDB>
+   DB_PORT=4000
+   DB_NAME=article
+   DB_USER=<username-dari-TiDB>
+   DB_PASSWORD=<password-dari-TiDB>
+   DB_TLS=true
+   ```
+
+Setelah deploy selesai, salin URL API Render (misalnya `https://sharing-vision-api.onrender.com`) untuk dipakai oleh frontend. Layanan web gratis Render dapat berhenti saat tidak digunakan dan membutuhkan waktu sekitar satu menit saat diakses kembali.
+
 ## Endpoint
 
 | Method | Endpoint | Keterangan |
